@@ -1,0 +1,9 @@
+Интервью на знание алгоритмов
+Вторник, 8 апреля, 15:00
+продлится около часа.
+
+Вот материалы, которые помогут вам подготовиться:
+https://www.youtube.com/watch?v=P5q5jr8Vmgw
+https://yandex.ru/yaintern/algorithm-training
+https://practicum.yandex.ru/algorithms-interview/
+https://education.yandex.ru/journal/algoritmicheskie-sobesedovaniya-v-yandekse-kak-podgotovitsya-i-chego-ozhidat
