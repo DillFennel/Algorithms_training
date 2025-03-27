@@ -21,7 +21,7 @@
 
 using namespace std;
 
-int func(const vector<int> inp, int goal){ //Испоьзуем метод бинарного поиска
+int func(const vector<int> inp, int goal){ //Используем метод бинарного поиска
     if(inp.empty()){
         return -1;
     }
