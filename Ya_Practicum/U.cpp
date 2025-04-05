@@ -10,7 +10,7 @@ void outputAnswer(const vector<string>& sequences) {
 }
 
 vector<string> generateSequences(int n) {
-    if(n%2 != 0 || n==0){
+    if(n%2 != 0 || n==0 || n==NULL){
         return {};
     }
 
