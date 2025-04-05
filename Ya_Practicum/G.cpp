@@ -38,7 +38,7 @@ int getNumberOfUpgoingPaths_NKvadrat(vector<Vertex> tree, int x) { // O(n^2)
 int getNumberOfUpgoingPaths(vector<Vertex> tree, int x) {
     int result = 0;
     unordered_map<int, vector<int>> get_children;
-    vector<vector<int>> count_weights (tree.size(), vector<int>(x+1, 0));
+    unordered_map<int, unordered_map<int, int>> pre_count, cur_count; 
     queue<int> to_go;
     for(int i=0; i<tree.size(); i++){ // O(n) -> Итого О(n)
         if(get_children.find(tree[i].p) != get_children.end()){ // O(1)
@@ -50,9 +50,7 @@ int getNumberOfUpgoingPaths(vector<Vertex> tree, int x) {
     }
 
     for(auto i: get_children[-1]){
-        if(tree[i].w <= x){
-            count_weights[i][tree[i].w] = 1;
-        }
+        pre_count[i][tree[i].w] = 1;
         if(tree[i].w == x){
             result++;
         }
@@ -62,16 +60,35 @@ int getNumberOfUpgoingPaths(vector<Vertex> tree, int x) {
             }
         }
     }
-    int curr_verc;
+    int cur_verc;
+    unordered_map<int, int> *pre_w, *cur_w;
     while(!(to_go.empty())){
-        curr_verc = to_go.front();
+        cur_verc = to_go.front();
         to_go.pop();
-        for(int i=0; i<x+1; i++){
-            if(i-tree[curr_verc].w >= 0){
-                count_weights[i]
+        pre_w = &pre_count[tree[cur_verc].p];
+        cur_w = &cur_count[cur_verc];
+        cur_w->insert({tree[cur_verc].w, 1});
+        if(tree[cur_verc].w == x){
+            result++;
+        }
+        for(auto parent: *pre_w){
+            if(parent.first + tree[cur_verc].w == x){
+                result+=parent.second;
+            }
+            if(cur_w->find(parent.first + tree[cur_verc].w) != cur_w->end()){
+                cur_w->at(parent.first + tree[cur_verc].w) += parent.second;
+            }
+            else{
+                cur_w->insert({parent.first + tree[cur_verc].w, parent.second});
+            }
+        }
+        if(get_children.find(cur_verc) != get_children.end()){
+            for(auto child: get_children[cur_verc]){
+                to_go.push(child);
             }
         }
     }
+    
     return result;
 }
 
