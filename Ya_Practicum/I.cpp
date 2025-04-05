@@ -27,9 +27,15 @@ Node* Reverse(Node* head, int left, int right) {
         }
         last_static_node = verc;
     }
-    Node* pre_verc = last_static_node->next; // Первая изменяемая вершина
-    Node* first_edit_node = pre_verc;
-    verc = pre_verc->next; // 
+	Node* pre_verc;
+	if(left == 1){
+    	pre_verc = head; // Первая изменяемая вершина
+    }
+	else{
+    	pre_verc = last_static_node->next; // Первая изменяемая вершина
+    }
+    Node* first_edit_node = pre_verc; // Запомним начало разворота, потом привяжем его к началу второго неизменяемого куска
+    verc = pre_verc->next; //Первая вершина, у путь которой будем разворачивать
     Node* next_verc;
     for(int i=0; i < right-left; i++){
         next_verc = verc->next;
@@ -37,13 +43,13 @@ Node* Reverse(Node* head, int left, int right) {
         pre_verc = verc;
         verc = next_verc;
     } // В конце pre_verc станет последним изменяемым элементым, а verc - первым неизменяемым элементом во второй части
-    last_static_node->next = pre_verc;
     if(verc){
         first_edit_node->next = verc;
     }
     if(left == 1){
         return pre_verc;
     }
+	last_static_node->next = pre_verc;
     return head;
 }
 
